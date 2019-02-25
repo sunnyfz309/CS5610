@@ -1,23 +1,27 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="font-family:Georgia; text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="https://www.warrenphotographic.co.uk/photography/bigs/43371-French-Bulldog-puppy-lying-on-his-side-white-background.jpg">
+
+<div class="jumbotron">
+  <h1 class="display-4">{{ title }} Assignment Home Page</h1>
 </div>
-<h2 style="font-family:Georgia;">Here are some information you should know: </h2>
-<ul>
-  <li>
-    <h4 style="font-family:Verdana;">Dog breed:</h4>
-    <p style="font-family:courier;">French Bulldog</p>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" routerLink="/login">Login</a>
   </li>
-  <li>
-    <h4 style="font-family:Verdana;">Life span:</h4>
-    <p style="font-family:courier;">10 – 12 years</p>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/register">Register</a>
   </li>
-  <li>
-    <h4 style="font-family:Verdana;">Temperament:</h4>
-    <p style="font-family:courier;">Affectionate, Lively, Patient, Easygoing, Alert, Sociable, Keen, Athletic, Playful, Bright</p>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/profile/123">Profile</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="profile/123/website">Website</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="profile/123/website/456/page">Pages</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="profile/123/website/456/page/321/widget">Widgets</a>
   </li>
 </ul>
 

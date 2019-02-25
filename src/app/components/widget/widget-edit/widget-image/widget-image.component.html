@@ -1,0 +1,9 @@
+<label class="mt-1" for="WidgetImageName">WidgetId</label>
+<input id="WidgetImageName" type="text" class="form-control" placeholder="{{widget._id}}" disabled/>
+<label class="mt-1" for="WidgetImageURL">URL</label>
+<input class="mt-1" id="WidgetImageURL" type="url" class="form-control" placeholder="URL" [(ngModel)]="widget.url"/>
+<label for="WidgetImageWidth">Width</label>
+<input id="WidgetImageWidth" type="text" class="form-control" placeholder="100%" [(ngModel)]="widget.width"/>
+<label class="mt-1" for="WidgetImageUpload">Upload</label>
+<input id="WidgetImageUpload" type="file" class="form-control" placeholder="No file chosen"/>
+<a class="btn btn-primary btn-block mt-1" routerLink="./">Upload Image</a>

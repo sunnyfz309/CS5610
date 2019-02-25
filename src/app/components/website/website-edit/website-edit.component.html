@@ -1,0 +1,57 @@
+<nav class="navbar navbar-fixed-top navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid row">
+    <div class="col-sm-4">
+      <div class="container-fluid">
+        <a routerLink='../' class="navbar-link mr-3">
+          <span class="fas fa-chevron-left fontawsome_icon"></span>
+        </a>
+        <a routerLink='../' class="navbar-brand">Websites</a>
+        <a routerLink='../new' class="navbar-link navbar-text float-right cl-text-white cl-icon-padding">
+          <span class="fas fa-plus fontawsome_icon"></span>
+        </a>
+      </div>
+    </div>
+    <div class="col-sm-8 mx-auto">
+      <div class="container-fluid">
+        <a routerLink='./' class="cl-text-white navbar-brand cl-text-bold">Edit Website</a>
+        <a routerLink='../' class="navbar-link navbar-text float-right cl-text-white cl-icon-padding">
+          <span class="fas fa-check fontawsome_icon"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container-fluid row">
+  <div class="col-sm-4 border-right">
+    <ul class="list-group list-group-flush" *ngFor="let web of websites">
+      <li class="list-group-item">
+        <a routerLink="./{{web._id}}"><span class="fas fa-cog fontawsome_icon float-right icon-padding"></span></a>
+        <a routerLink="./{{web._id}}/page">{{web.name}}</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-8 mx-auto">
+    <div class="container-fluid">
+      <label for="Edit-Website-Name">Website Name</label>
+      <input id="Edit-Website-Name" type="text" class="form-control" placeholder="Blogger" [(ngModel)]="website.name"/>
+      <label for="Edit-Website-Description">Website Description</label>
+      <textarea id="Edit-Website-Description" class="form-control" rows="5"
+                placeholder="Blogger is a blog-publishing service that allows multi-user blogs with time-stamped entries. It was developed by Pyra Labs, which was bought by Google in 2003. The blogs are hosted by Google and generally accessed from a subdomain of blogspot.com..."
+                [(ngModel)]="website.description"></textarea>
+    </div>
+    <div class="container-fluid mt-3">
+      <a class="btn btn-success btn-block" (click)="updateWebsite()">Update</a>
+      <a class="btn btn-danger btn-block" (click)="deleteWebsite()">Delete</a>
+    </div>
+  </div>
+</div>
+
+<nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid justify-content-end">
+      <a routerLink='../../' class="navbar-link navbar-text cl-icon-padding">
+        <span class="fas fa-user fontawsome_icon"></span>
+      </a>
+    </div>
+</nav>

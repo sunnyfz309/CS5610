@@ -1,0 +1,36 @@
+<nav class="navbar navbar-fixed-top navbar-expand-lg navbar-light bg-light">
+  <div class = "container-fluid row">
+    <a routerLink="../" class="navbar-text white-text pull-left icon-padding">
+      <span class="fas fa-chevron-left fontawsome_icon"></span>
+    </a>
+    <a routerLink="./" class="navbar-brand">Choose Widget</a>
+    <a routerLink="./" class="navbar-text white-text pull-right icon-padding">
+      <span class="fas fa-cogs fontawsome_icon"></span>
+    </a>
+  </div>
+</nav>
+
+<div class="container-fluid container-padding">
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">
+      <a (click)="createWidget('HEADING')">Header</a>
+    </li>
+    <li class="list-group-item">
+      <a (click)="createWidget('HTML')">HTML</a>
+    </li>
+    <li class="list-group-item">
+      <a (click)="createWidget('IMAGE')">Image</a>
+    </li>
+    <li class="list-group-item">
+      <a (click)="createWidget('YOUTUBE')">YouTube</a>
+    </li>
+  </ul>
+</div>
+
+<nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid justify-content-end">
+    <a routerLink="../../../../../../" class="avbar-link navbar-text cl-icon-padding">
+      <span class="fas fa-user fontawsome_icon"></span>
+    </a>
+  </div>
+</nav>

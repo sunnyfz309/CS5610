@@ -1,0 +1,28 @@
+<nav class="navbar navbar-fixed-top navbar-expand-lg navbar-light bg-light">
+  <div class = "container-fluid row">
+    <a routerLink="../" class="navbar-text white-text pull-left icon-padding">
+      <span class="fas fa-chevron-left fontawsome_icon"></span>
+    </a>
+    <a routerLink="./" class="navbar-brand">Websites</a>
+    <a routerLink="./new" class="navbar-text white-text pull-right icon-padding">
+      <span class="fas fa-plus fontawsome_icon"></span>
+    </a>
+  </div>
+</nav>
+
+<div class="container-fluid container-padding">
+  <ul class="list-group list-group-flush" *ngFor="let web of websites">
+    <li class="list-group-item">
+      <a routerLink="./{{web._id}}"><span class="fas fa-cog fontawsome_icon float-right icon-padding"></span></a>
+      <a routerLink="./{{web._id}}/page">{{web.name}}</a>
+    </li>
+  </ul>
+</div>
+
+<nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid justify-content-end">
+    <a routerLink="../" class="avbar-link navbar-text cl-icon-padding">
+      <span class="fas fa-user fontawsome_icon"></span>
+    </a>
+  </div>
+</nav>
