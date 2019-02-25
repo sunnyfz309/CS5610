@@ -1,28 +1,30 @@
 <!--The content below is only a placeholder and can be replaced.-->
-
-<div class="jumbotron">
-  <h1 class="display-4">{{ title }} Assignment Home Page</h1>
-</div>
-
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link active" routerLink="/login">Login</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="/register">Register</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="/profile/123">Profile</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="profile/123/website">Website</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="profile/123/website/456/page">Pages</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="profile/123/website/456/page/321/widget">Widgets</a>
-  </li>
-</ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <h4>{{ title }} Assignment Home Page</h4>
+  </div>
+  <div class="container">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" routerLink="/login">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/register">Register</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/profile/123">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="profile/123/website">Website</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="profile/123/website/456/page">Pages</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="profile/123/website/456/page/321/widget">Widgets</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
 <router-outlet></router-outlet>
