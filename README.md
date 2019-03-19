@@ -1,5 +1,14 @@
 sunnyfz309
 
+```
+[tips for play my herokuapp]
+1. login with sample info
+2. click websites button in Profile page
+3. click Go link in Website page
+4. click Go Post1 in Page page
+5. play around on Widget page
+```
+
 # MyProject
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.3.
