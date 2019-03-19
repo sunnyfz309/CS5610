@@ -3,6 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClientModule} from '@angular/common/http';
+import {SafePipe} from '../../assignment/pipes/safe.pipe';
+import {OrderByPipe} from '../../assignment/pipes/order-by-pipe.pipe';
+import { SortableDirective } from '../../assignment/directives/sortable.directive';
 
 // user components
 import { LoginComponent } from './components/user/login/login.component';
@@ -31,7 +35,7 @@ import { WidgetYoutubeComponent } from './components/widget/widget-edit/widget-y
 import { UserService } from './service/user.service.client';
 import {WebsiteService} from './service/website.service.client';
 import {PageService} from './service/page.service.client';
-import {SafePipe, WidgetService} from './service/widget.service.client';
+import {WidgetService} from './service/widget.service.client';
 
 @NgModule({
   declarations: [
@@ -51,12 +55,15 @@ import {SafePipe, WidgetService} from './service/widget.service.client';
     WidgetHeaderComponent,
     WidgetImageComponent,
     WidgetYoutubeComponent,
-    SafePipe
+    SafePipe,
+    OrderByPipe,
+    SortableDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule
   ],
   providers: [
     UserService,

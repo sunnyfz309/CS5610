@@ -15,17 +15,24 @@
     {{updateMsg}}
   </div>
 
+  <div *ngIf="errorFlag"
+       class="alert alert-danger">
+    {{errorMsg}}
+  </div>
+
   <h4 class="font-weight-light font-italic text-secondary">Hello {{user.username}}!</h4>
   <div class="form-group">
     <label for="Username">Username</label>
-    <input id="Username" type="text" class="form-control" placeholder="username" [(ngModel)]="user.username"/>
+    <input id="Username" type="text" class="form-control" name="username" placeholder="username" [(ngModel)]="user.username"/>
     <label for="Password">Password</label>
-    <input id="Password" type="password" class="form-control" placeholder="password" [(ngModel)]="user.password"/>
+    <input id="Password" type="password" class="form-control" name="password" placeholder="password" [(ngModel)]="user.password"/>
     <label for="FirstName">First Name</label>
-    <input id="FirstName" type="text" class="form-control" placeholder="first name" [(ngModel)]="user.firstName"/>
+    <input id="FirstName" type="text" class="form-control" name="firstname" placeholder="first name" [(ngModel)]="user.firstName"/>
     <label for="LastName">Last Name</label>
-    <input id="LastName" type="text" class="form-control" placeholder="last name" [(ngModel)]="user.lastName"/>
+    <input id="LastName" type="text" class="form-control" name="lastname" placeholder="last name" [(ngModel)]="user.lastName"/>
   </div>
+  <div class="form-group"><a class="btn btn-success btn-block" (click)="updateUser()">Update</a></div>
+  <div class="form-group"><a class="btn btn-warning btn-block" (click)="deleteUser()">Delete</a></div>
   <span class="help-block" *ngIf="updateFlag"></span>
   <div class="form-group"><a class="btn btn-primary btn-block" routerLink='/profile/{{user._id}}/website'>Websites</a></div>
   <div class="form-group"><a class="btn btn-danger btn-block" routerLink="/login">Logout</a></div>

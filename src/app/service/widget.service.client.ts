@@ -1,79 +1,47 @@
-import {Injectable, Pipe, PipeTransform} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Widget} from '../models/widget.model.client';
-import {DomSanitizer} from '@angular/platform-browser';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class WidgetService {
-  widgets: Widget[] = [
-    WidgetService.newHeader('123', 'HEADING', '321', 2, 'GIZMODO'),
-    WidgetService.newHeader('234', 'HEADING', '321', 4, 'Lorem ipsum'),
-    WidgetService.newImage('345', 'IMAGE', '321', '100%',
-      'https://goo.gl/DoFdoq'),
-    WidgetService.newHtml('456', 'HTML', '321', 'Lorem ipsum'),
-    WidgetService.newHeader('567', 'HEADING', '321', 4, 'GIZMODE'),
-    WidgetService.newYoutube('678', 'YOUTUBE', '321', '100%',
-      'https://www.youtube.com/embed/-deQurc3L-g'),
-    WidgetService.newHtml('789', 'HTML', '321', 'Lorem ipsum')
-  ];
 
-  static newHeader(id: string, widgetType: string, pageId: string, size: number, text: string) {
-    return new Widget(id, widgetType, pageId, size, text, null, null);
-  }
+  constructor(private _http: HttpClient) {}
 
-  static newHtml(id: string, widgetType: string, pageId: string, text: string) {
-    return new Widget(id, widgetType, pageId, null, text, null, null);
-  }
-
-  static newImage(id: string, widgetType: string, pageId: string, width: string, url: string) {
-    return new Widget(id, widgetType, pageId, null, null, width, url);
-  }
-
-  static newYoutube(id: string, widgetType: string, pageId: string, width: string, url: string) {
-    return new Widget(id, widgetType, pageId, null, null, width, url);
-  }
+  baseUrl = environment.baseUrl;
 
   createWidget(pageId: string, widget: Widget) {
-    this.widgets.push(widget);
-    return widget;
+    return this._http.post(this.baseUrl + '/api/page/' + pageId + '/widget', widget);
   }
 
   findWidgetsByPageId(pageId: string) {
-    return this.widgets.filter(function (widget) {
-      return widget.pageId === pageId;
-    });
+    return this._http.get(this.baseUrl + '/api/page/' + pageId + '/widget');
   }
 
   findWidgetById(widgetId: string) {
-    return this.widgets.find(function (widget) {
-      return widget._id === widgetId;
-    });
+    return this._http.get(this.baseUrl + '/api/widget/' + widgetId);
   }
 
   updateWidget(widgetId: string, widget: Widget) {
-    for (const i in this.widgets) {
-      if (this.widgets[i]._id === widgetId) {
-        this.widgets[i].widgetType = widget.widgetType;
-        this.widgets[i].pageId = widget.pageId;
-        this.widgets[i].size = widget.size;
-        this.widgets[i].text = widget.text;
-        this.widgets[i].width = widget.width;
-        this.widgets[i].url = widget.url;
-        return this.widgets[i];
-      }
-    }
+    return this._http.put(this.baseUrl + '/api/widget/' + widgetId, widget);
   }
 
-  deleteWidget(widgetId) {
-    this.widgets.splice(this.widgets.findIndex(function (widget) {
-      return widget._id === widgetId;
-    }), 1);
+  deleteWidget(widgetId: string) {
+    return this._http.delete(this.baseUrl + '/api/widget/' + widgetId);
   }
+
+  // reorderWidgets(pageId: string, indexes) {
+  //   return this._http.put(this.baseUrl + '/api/page/' + pageId +
+  //     '/widget?initial=' + indexes.startIndex + '&final=' + indexes.endIndex, '');
+  // }
+
+  reorderWidgets(startIndex, endIndex, pageId) {
+
+    // const url = 'http://localhost:3200/api/page/' + pageId + '/widget?start=' + startIndex + '&end=' + endIndex;
+    const url = 'https://webdev-shufanxing-cs5610.herokuapp.com' + '/api/page/' + pageId + '/widget?start='
+      + startIndex + '&end=' + endIndex;
+    return this._http.put(url, '');
+  }
+
 }
 
-@Pipe({ name: 'safe' })
-export class SafePipe implements PipeTransform {
-  constructor(private sanitizer: DomSanitizer) {}
-  transform(url) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  }
-}

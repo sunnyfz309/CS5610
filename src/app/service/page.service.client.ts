@@ -1,52 +1,32 @@
 import {Injectable} from '@angular/core';
 import {Page} from '../models/page.model.client';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class PageService {
-  pages: Page[] = [
-    new Page('321', 'Post 1', '456', 'Lorem'),
-    new Page('432', 'Post 2', '456', 'Lorem'),
-    new Page('543', 'Post 3', '456', 'Lorem')
-  ];
+  constructor(private _http: HttpClient) {}
 
-  createPage(websiteId: String, page: Page) {
-    const new_page = {
-      _id: (new Date()).getTime() + '',
-      name: page.name,
-      websiteId: websiteId,
-      description: page.description
-    };
+  baseUrl = environment.baseUrl;
 
-    this.pages.push(new_page);
-    return new_page;
+  createPage(websiteId: string, page: Page) {
+    return this._http.post(this.baseUrl + '/api/website/' + websiteId + '/page', page);
   }
 
-  findPageByWebsiteId(websiteId: String) {
-    return this.pages.filter(function(page) {
-      return page.websiteId === websiteId;
-    });
+  findPageByWebsiteId(websiteId: string) {
+    return this._http.get(this.baseUrl + '/api/website/' + websiteId + '/page');
   }
 
-  findPageById(pageId: String) {
-    return this.pages.find(function(page) {
-      return page._id === pageId;
-    });
+  findPageById(pageId: string) {
+    return this._http.get(this.baseUrl + '/api/page/' + pageId);
   }
 
-  updatePage(pageId: String, page: Page) {
-    for (const i in this.pages) {
-      if (this.pages[i]._id === pageId) {
-        this.pages[i].name = page.name;
-        this.pages[i].websiteId = page.websiteId;
-        this.pages[i].description = page.description;
-        return this.pages[i];
-      }
-    }
+  updatePage(pageId: string, page: Page) {
+    return this._http.put(this.baseUrl + '/api/page/' + pageId, page);
   }
 
-  deletePage(pageId: String) {
-    this.pages.splice(this.pages.findIndex(function(page) {
-      return page._id === pageId;
-    }), 1);
+  deletePage(pageId: string) {
+    return this._http.delete(this.baseUrl + '/api/page/' + pageId);
   }
+
 }
