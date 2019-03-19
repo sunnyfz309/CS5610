@@ -1966,14 +1966,9 @@ var WidgetService = /** @class */ (function () {
     WidgetService.prototype.deleteWidget = function (widgetId) {
         return this._http.delete(this.baseUrl + '/api/widget/' + widgetId);
     };
-    // reorderWidgets(pageId: string, indexes) {
-    //   return this._http.put(this.baseUrl + '/api/page/' + pageId +
-    //     '/widget?initial=' + indexes.startIndex + '&final=' + indexes.endIndex, '');
-    // }
     WidgetService.prototype.reorderWidgets = function (startIndex, endIndex, pageId) {
         // const url = 'http://localhost:3200/api/page/' + pageId + '/widget?start=' + startIndex + '&end=' + endIndex;
-        var url = 'https://webdev-shufanxing-cs5610.herokuapp.com' + '/api/page/' + pageId + '/widget?start='
-            + startIndex + '&end=' + endIndex;
+        var url = 'https://webdev-zhe-cs5610.herokuapp.com' + '/api/page/' + pageId + '/widget?start=' + startIndex + '&end=' + endIndex;
         return this._http.put(url, '');
     };
     WidgetService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -1999,6 +1994,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "environment", function() { return environment; });
 var environment = {
     production: true,
+    // production: false,
     baseUrl: 'https://webdev-zhe-cs5610.herokuapp.com'
 };
 
@@ -2020,6 +2016,7 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 var environment = {
     production: false,
+    // production: true,
     baseUrl: 'http://localhost:3200'
 };
 /*

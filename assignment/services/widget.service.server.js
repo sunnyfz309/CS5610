@@ -101,21 +101,22 @@ module.exports = function (app) {
  */
   }
 
-  function uploadImage(req, res) {
-    var userId = req.body.userId;
-    var websiteId = req.body.websiteId;
-    var pageId = req.body.pageId;
+  var baseUrl = 'http://localhost:3200';
+  // var baseUrl = 'https://webdev-zhe-cs5610.herokuapp.com/';
 
+  function uploadImage(req, res) {
+    var userId        = req.body.userId;
+    var websiteId     = req.body.websiteId;
+    var pageId        = req.body.pageId;
     var widgetId      = req.body.widgetId;
-    var width         = req.body.width;
     var myFile        = req.file;
 
-    if(myFile == null) {
-      //res.redirect("https://yourheroku.herokuapp.com/user/website/"+websiteId+"/page/"+pageId+"/widget/"+widgetId);
-      // res.redirect("http://localhost:3200/user/website/"+websiteId+"/page/"+pageId+"/widget/"+widgetId);
+    var callbackUrl = baseUrl+"/profile/"+userId+
+      "/website/"+websiteId+"/page/"+pageId+"/widget/"+widgetId;
+    if (myFile === null) {
+      res.redirect(callbackUrl);
       return;
     }
-
     var originalname  = myFile.originalname; // file name on user's computer
     var filename      = myFile.filename;     // new file name in upload folder
     var path          = myFile.path;         // full path of uploaded file
@@ -123,29 +124,14 @@ module.exports = function (app) {
     var size          = myFile.size;
     var mimetype      = myFile.mimetype;
 
-
-    var widget = { url: "assets/uploads/"+filename};
-
-    var widget;
-    for (var i = 0; i < widgets.length; i++) {
+    for (const i in widgets) {
       if (widgets[i]._id === widgetId) {
-        widget = widgets[i];
+        widgets[i].url = baseUrl+'/assets/uploads/'+filename;
+        break;
       }
     }
-    widget.url = 'uploads/' + filename;
 
-    /*widgetModel
-      .updateWidget(widgetId, widget)
-      .then(function (stats) {
-          console.log(stats);
-          res.send(200);
-        },
-        function (err) {
-          res.sendStatus(404).send(err);
-        });*/
-
-    // res.redirect("https://yourheroku.herokuapp.com/user/website/"+websiteId+"/page/"+pageId+"/widget/"+widgetId);
-    //res.redirect("http://localhost:3200/user/website/"+websiteId+"/page/"+pageId+"/widget/"+widgetId);
+    res.redirect(callbackUrl);
   }
 
   function array_swap(arr, old_index, new_index) {

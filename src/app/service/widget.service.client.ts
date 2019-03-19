@@ -30,16 +30,10 @@ export class WidgetService {
     return this._http.delete(this.baseUrl + '/api/widget/' + widgetId);
   }
 
-  // reorderWidgets(pageId: string, indexes) {
-  //   return this._http.put(this.baseUrl + '/api/page/' + pageId +
-  //     '/widget?initial=' + indexes.startIndex + '&final=' + indexes.endIndex, '');
-  // }
-
   reorderWidgets(startIndex, endIndex, pageId) {
 
     // const url = 'http://localhost:3200/api/page/' + pageId + '/widget?start=' + startIndex + '&end=' + endIndex;
-    const url = 'https://webdev-shufanxing-cs5610.herokuapp.com' + '/api/page/' + pageId + '/widget?start='
-      + startIndex + '&end=' + endIndex;
+    const url = 'https://webdev-zhe-cs5610.herokuapp.com' + '/api/page/' + pageId + '/widget?start=' + startIndex + '&end=' + endIndex;
     return this._http.put(url, '');
   }
 
