@@ -1,7 +1,9 @@
 import { User } from '../models/user.model.client';
 import {Injectable} from '@angular/core';
-import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
+// import {environment} from '../../environments/environment';
+import {environment} from '../../environments/environment.prod';
+
 
 @Injectable()
 export class UserService {

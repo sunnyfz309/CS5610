@@ -101,8 +101,8 @@ module.exports = function (app) {
  */
   }
 
-  var baseUrl = 'http://localhost:3200';
-  // var baseUrl = 'https://webdev-zhe-cs5610.herokuapp.com/';
+  // var baseUrl = 'http://localhost:3200';
+  var baseUrl = 'https://webdev-zhe-cs5610.herokuapp.com/';
 
   function uploadImage(req, res) {
     var userId        = req.body.userId;
