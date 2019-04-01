@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WidgetImageComponent } from './widget-image.component';
 
-describe('FlickrImageSearchComponent', () => {
+describe('WidgetImageComponent', () => {
   let component: WidgetImageComponent;
   let fixture: ComponentFixture<WidgetImageComponent>;
 

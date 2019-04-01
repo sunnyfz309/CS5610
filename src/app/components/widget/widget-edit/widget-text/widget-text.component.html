@@ -11,6 +11,9 @@
 </nav>
 
 <div class="container container-padding">
+  <div *ngIf="flag" class="alert alert-danger">
+    {{error}}
+  </div>
   <label for="WidgetTextName">WidgetId (Cannot change)</label>
   <input id="WidgetTextName" type="text" class="form-control" placeholder="{{widget._id}}" disabled/>
   <label for="WidgetTextText">Text</label>
@@ -19,21 +22,17 @@
   <input id="WidgetTextRows" type="number" class="form-control" placeholder="3" [(ngModel)]="widget.size"/>
   <label for="WidgetTextPlaceholder">Placeholder</label>
   <input id="WidgetTextPlaceholder" type="text" class="form-control" placeholder="Placeholder" [(ngModel)]="widget.placeholder"/>
-  <p></p>
+  <br/>
   <div class="input-group">
     <label for="formatted" class="form-control">Formatted</label>
     <span class="input-group-addon">
         <input [(ngModel)]="widget.formatted" id="formatted" class="pull-right" type="checkbox"/>
     </span>
   </div>
-
   <br/>
-  <a class="btn btn-success btn-block mt-2" (click)="updateWidget()">
-    Update
-  </a>
-  <a class="btn btn-danger btn-block" (click)="deleteWidget()">
-    Delete
-  </a>
+  <a class="btn btn-success btn-block mt-2" (click)="updateWidget()">Update</a>
+  <a class="btn btn-danger btn-block" (click)="deleteWidget()">Delete</a>
+
 </div>
 
 <nav class="navbar navbar-fixed-bottom navbar-expand-lg navbar-light bg-light">

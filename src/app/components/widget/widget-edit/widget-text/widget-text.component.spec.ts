@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WidgetTextComponent } from './widget-text.component';
 
-describe('WidgetHtmlComponent', () => {
+describe('WidgetTextComponent', () => {
   let component: WidgetTextComponent;
   let fixture: ComponentFixture<WidgetTextComponent>;
 

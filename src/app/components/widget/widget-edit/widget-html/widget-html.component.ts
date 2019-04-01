@@ -12,6 +12,9 @@ export class WidgetHtmlComponent implements OnInit {
 
   widgetId: string;
   widget: Widget;
+  error: string;
+  alert: string;
+  flag = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,6 +25,11 @@ export class WidgetHtmlComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    // initialize error and alert text
+    this.error = 'Enter the name of the widget';
+    this.alert = '* Enter the widget name';
+
     this.route.params.subscribe(params => {
       this.widgetId = params['wgid'];
       this.widgetService.findWidgetById(params['wgid']).subscribe(
@@ -34,13 +42,18 @@ export class WidgetHtmlComponent implements OnInit {
   }
 
   updateWidget() {
-    this.widgetService.updateWidget(this.widgetId, this.widget).subscribe(
-      (widget: Widget) => {
-        this.widget = widget;
-        this.router.navigate(['../'], { relativeTo: this.route });
-      },
-      (error: any) => console.log(error)
-    );
+    // if name field is undefined then set error 'flag' to true making 'error' and 'alert' message visible
+    if (this.widget['name'] === '') {
+      this.flag = true;
+    } else {
+      this.widgetService.updateWidget(this.widgetId, this.widget).subscribe(
+        (widget: Widget) => {
+          this.widget = widget;
+          this.router.navigate(['../'], { relativeTo: this.route });
+        },
+        (error: any) => console.log(error)
+      );
+    }
   }
 
   deleteWidget() {

@@ -11,6 +11,9 @@
 </nav>
 
 <div class="container container-padding">
+  <div *ngIf="flag" class="alert alert-danger">
+    {{error}}
+  </div>
   <label for="WidgetHtmlName">WidgetId (Cannot change)</label>
   <input id="WidgetHtmlName" type="text" class="form-control" placeholder="{{widget._id}}" disabled/>
   <label>HTML</label>

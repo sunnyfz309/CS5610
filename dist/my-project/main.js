@@ -1441,7 +1441,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-fixed-top navbar-expand-lg navbar-light bg-light\">\n  <div class = \"container-fluid row\">\n    <a routerLink=\"../\" class=\"navbar-text white-text pull-left icon-padding\">\n      <span class=\"fas fa-chevron-left fontawsome_icon\"></span>\n    </a>\n    <a routerLink=\"./\" class=\"navbar-brand\">Widget Edit</a>\n    <a (click)=\"updateWidget()\" class=\"black-text navbar-text pull-right icon-padding\">\n      <span class=\"fas fa-check fontawsome_icon\"></span>\n    </a>\n  </div>\n</nav>\n\n<div class=\"container container-padding\">\n  <label for=\"WidgetHtmlName\">WidgetId (Cannot change)</label>\n  <input id=\"WidgetHtmlName\" type=\"text\" class=\"form-control\" placeholder=\"{{widget._id}}\" disabled/>\n  <label>HTML</label>\n  <quill-editor [(ngModel)]=\"widget.text\"></quill-editor>\n  <br/>\n\n  <a class=\"btn btn-success btn-block mt-2\" (click)=\"updateWidget()\">\n    Update\n  </a>\n  <a class=\"btn btn-danger btn-block\" (click)=\"deleteWidget()\">\n    Delete\n  </a>\n</div>\n\n<nav class=\"navbar navbar-fixed-bottom navbar-expand-lg navbar-light bg-light\">\n  <div class=\"container-fluid justify-content-end\">\n    <a routerLink=\"../../../../../../\" class=\"avbar-link navbar-text cl-icon-padding\">\n      <span class=\"fas fa-user fontawsome_icon\"></span>\n    </a>\n  </div>\n</nav>\n\n\n\n"
+module.exports = "<nav class=\"navbar navbar-fixed-top navbar-expand-lg navbar-light bg-light\">\n  <div class = \"container-fluid row\">\n    <a routerLink=\"../\" class=\"navbar-text white-text pull-left icon-padding\">\n      <span class=\"fas fa-chevron-left fontawsome_icon\"></span>\n    </a>\n    <a routerLink=\"./\" class=\"navbar-brand\">Widget Edit</a>\n    <a (click)=\"updateWidget()\" class=\"black-text navbar-text pull-right icon-padding\">\n      <span class=\"fas fa-check fontawsome_icon\"></span>\n    </a>\n  </div>\n</nav>\n\n<div class=\"container container-padding\">\n  <div *ngIf=\"flag\" class=\"alert alert-danger\">\n    {{error}}\n  </div>\n  <label for=\"WidgetHtmlName\">WidgetId (Cannot change)</label>\n  <input id=\"WidgetHtmlName\" type=\"text\" class=\"form-control\" placeholder=\"{{widget._id}}\" disabled/>\n  <label>HTML</label>\n  <quill-editor [(ngModel)]=\"widget.text\"></quill-editor>\n  <br/>\n\n  <a class=\"btn btn-success btn-block mt-2\" (click)=\"updateWidget()\">\n    Update\n  </a>\n  <a class=\"btn btn-danger btn-block\" (click)=\"deleteWidget()\">\n    Delete\n  </a>\n</div>\n\n<nav class=\"navbar navbar-fixed-bottom navbar-expand-lg navbar-light bg-light\">\n  <div class=\"container-fluid justify-content-end\">\n    <a routerLink=\"../../../../../../\" class=\"avbar-link navbar-text cl-icon-padding\">\n      <span class=\"fas fa-user fontawsome_icon\"></span>\n    </a>\n  </div>\n</nav>\n\n\n\n"
 
 /***/ }),
 
@@ -1470,10 +1470,14 @@ var WidgetHtmlComponent = /** @class */ (function () {
         this.route = route;
         this.router = router;
         this.widgetService = widgetService;
+        this.flag = false;
         this.widget = new _models_widget_model_client__WEBPACK_IMPORTED_MODULE_2__["Widget"]('', '', '', 1, '', '', '', '', false, null);
     }
     WidgetHtmlComponent.prototype.ngOnInit = function () {
         var _this = this;
+        // initialize error and alert text
+        this.error = 'Enter the name of the widget';
+        this.alert = '* Enter the widget name';
         this.route.params.subscribe(function (params) {
             _this.widgetId = params['wgid'];
             _this.widgetService.findWidgetById(params['wgid']).subscribe(function (widget) {
@@ -1483,10 +1487,16 @@ var WidgetHtmlComponent = /** @class */ (function () {
     };
     WidgetHtmlComponent.prototype.updateWidget = function () {
         var _this = this;
-        this.widgetService.updateWidget(this.widgetId, this.widget).subscribe(function (widget) {
-            _this.widget = widget;
-            _this.router.navigate(['../'], { relativeTo: _this.route });
-        }, function (error) { return console.log(error); });
+        // if name field is undefined then set error 'flag' to true making 'error' and 'alert' message visible
+        if (this.widget['name'] === '') {
+            this.flag = true;
+        }
+        else {
+            this.widgetService.updateWidget(this.widgetId, this.widget).subscribe(function (widget) {
+                _this.widget = widget;
+                _this.router.navigate(['../'], { relativeTo: _this.route });
+            }, function (error) { return console.log(error); });
+        }
     };
     WidgetHtmlComponent.prototype.deleteWidget = function () {
         var _this = this;
@@ -1729,7 +1739,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-fixed-top navbar-expand-lg navbar-light bg-light\">\n  <div class = \"container-fluid row\">\n    <a routerLink=\"../\" class=\"navbar-text white-text pull-left icon-padding\">\n      <span class=\"fas fa-chevron-left fontawsome_icon\"></span>\n    </a>\n    <a routerLink=\"./\" class=\"navbar-brand\">Widget Edit</a>\n    <a (click)=\"updateWidget()\" class=\"black-text navbar-text pull-right icon-padding\">\n      <span class=\"fas fa-check fontawsome_icon\"></span>\n    </a>\n  </div>\n</nav>\n\n<div class=\"container container-padding\">\n  <label for=\"WidgetTextName\">WidgetId (Cannot change)</label>\n  <input id=\"WidgetTextName\" type=\"text\" class=\"form-control\" placeholder=\"{{widget._id}}\" disabled/>\n  <label for=\"WidgetTextText\">Text</label>\n  <input id=\"WidgetTextText\" type=\"text\" class=\"form-control\" placeholder=\"Text\" [(ngModel)]=\"widget.text\"/>\n  <label for=\"WidgetTextRows\">Rows</label>\n  <input id=\"WidgetTextRows\" type=\"number\" class=\"form-control\" placeholder=\"3\" [(ngModel)]=\"widget.size\"/>\n  <label for=\"WidgetTextPlaceholder\">Placeholder</label>\n  <input id=\"WidgetTextPlaceholder\" type=\"text\" class=\"form-control\" placeholder=\"Placeholder\" [(ngModel)]=\"widget.placeholder\"/>\n  <p></p>\n  <div class=\"input-group\">\n    <label for=\"formatted\" class=\"form-control\">Formatted</label>\n    <span class=\"input-group-addon\">\n        <input [(ngModel)]=\"widget.formatted\" id=\"formatted\" class=\"pull-right\" type=\"checkbox\"/>\n    </span>\n  </div>\n\n  <br/>\n  <a class=\"btn btn-success btn-block mt-2\" (click)=\"updateWidget()\">\n    Update\n  </a>\n  <a class=\"btn btn-danger btn-block\" (click)=\"deleteWidget()\">\n    Delete\n  </a>\n</div>\n\n<nav class=\"navbar navbar-fixed-bottom navbar-expand-lg navbar-light bg-light\">\n  <div class=\"container-fluid justify-content-end\">\n    <a routerLink=\"../../../../../../\" class=\"avbar-link navbar-text cl-icon-padding\">\n      <span class=\"fas fa-user fontawsome_icon\"></span>\n    </a>\n  </div>\n</nav>\n\n\n"
+module.exports = "<nav class=\"navbar navbar-fixed-top navbar-expand-lg navbar-light bg-light\">\n  <div class = \"container-fluid row\">\n    <a routerLink=\"../\" class=\"navbar-text white-text pull-left icon-padding\">\n      <span class=\"fas fa-chevron-left fontawsome_icon\"></span>\n    </a>\n    <a routerLink=\"./\" class=\"navbar-brand\">Widget Edit</a>\n    <a (click)=\"updateWidget()\" class=\"black-text navbar-text pull-right icon-padding\">\n      <span class=\"fas fa-check fontawsome_icon\"></span>\n    </a>\n  </div>\n</nav>\n\n<div class=\"container container-padding\">\n  <div *ngIf=\"flag\" class=\"alert alert-danger\">\n    {{error}}\n  </div>\n  <label for=\"WidgetTextName\">WidgetId (Cannot change)</label>\n  <input id=\"WidgetTextName\" type=\"text\" class=\"form-control\" placeholder=\"{{widget._id}}\" disabled/>\n  <label for=\"WidgetTextText\">Text</label>\n  <input id=\"WidgetTextText\" type=\"text\" class=\"form-control\" placeholder=\"Text\" [(ngModel)]=\"widget.text\"/>\n  <label for=\"WidgetTextRows\">Rows</label>\n  <input id=\"WidgetTextRows\" type=\"number\" class=\"form-control\" placeholder=\"3\" [(ngModel)]=\"widget.size\"/>\n  <label for=\"WidgetTextPlaceholder\">Placeholder</label>\n  <input id=\"WidgetTextPlaceholder\" type=\"text\" class=\"form-control\" placeholder=\"Placeholder\" [(ngModel)]=\"widget.placeholder\"/>\n  <br/>\n  <div class=\"input-group\">\n    <label for=\"formatted\" class=\"form-control\">Formatted</label>\n    <span class=\"input-group-addon\">\n        <input [(ngModel)]=\"widget.formatted\" id=\"formatted\" class=\"pull-right\" type=\"checkbox\"/>\n    </span>\n  </div>\n  <br/>\n  <a class=\"btn btn-success btn-block mt-2\" (click)=\"updateWidget()\">Update</a>\n  <a class=\"btn btn-danger btn-block\" (click)=\"deleteWidget()\">Delete</a>\n\n</div>\n\n<nav class=\"navbar navbar-fixed-bottom navbar-expand-lg navbar-light bg-light\">\n  <div class=\"container-fluid justify-content-end\">\n    <a routerLink=\"../../../../../../\" class=\"avbar-link navbar-text cl-icon-padding\">\n      <span class=\"fas fa-user fontawsome_icon\"></span>\n    </a>\n  </div>\n</nav>\n\n\n"
 
 /***/ }),
 
@@ -1758,10 +1768,14 @@ var WidgetTextComponent = /** @class */ (function () {
         this.route = route;
         this.router = router;
         this.widgetService = widgetService;
+        this.flag = false; // setting error flag as false by default
         this.widget = new _models_widget_model_client__WEBPACK_IMPORTED_MODULE_2__["Widget"]('', '', '', 1, '', '', '', '', false, null);
     }
     WidgetTextComponent.prototype.ngOnInit = function () {
         var _this = this;
+        // initialize error and alert text
+        this.error = 'Enter the required field';
+        this.alert = '* Enter the required fields';
         this.route.params.subscribe(function (params) {
             _this.widgetId = params['wgid'];
             _this.widgetService.findWidgetById(params['wgid']).subscribe(function (widget) {
@@ -1771,10 +1785,15 @@ var WidgetTextComponent = /** @class */ (function () {
     };
     WidgetTextComponent.prototype.updateWidget = function () {
         var _this = this;
-        this.widgetService.updateWidget(this.widgetId, this.widget).subscribe(function (widget) {
-            _this.widget = widget;
-            _this.router.navigate(['../'], { relativeTo: _this.route });
-        }, function (error) { return console.log(error); });
+        if (this.widget['name'] === undefined) {
+            this.flag = true;
+        }
+        else {
+            this.widgetService.updateWidget(this.widgetId, this.widget).subscribe(function (widget) {
+                _this.widget = widget;
+                _this.router.navigate(['../'], { relativeTo: _this.route });
+            }, function (error) { return console.log(error); });
+        }
     };
     WidgetTextComponent.prototype.deleteWidget = function () {
         var _this = this;
