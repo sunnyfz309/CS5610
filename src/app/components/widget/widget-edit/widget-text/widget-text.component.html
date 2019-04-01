@@ -1,0 +1,47 @@
+<nav class="navbar navbar-fixed-top navbar-expand-lg navbar-light bg-light">
+  <div class = "container-fluid row">
+    <a routerLink="../" class="navbar-text white-text pull-left icon-padding">
+      <span class="fas fa-chevron-left fontawsome_icon"></span>
+    </a>
+    <a routerLink="./" class="navbar-brand">Widget Edit</a>
+    <a (click)="updateWidget()" class="black-text navbar-text pull-right icon-padding">
+      <span class="fas fa-check fontawsome_icon"></span>
+    </a>
+  </div>
+</nav>
+
+<div class="container container-padding">
+  <label for="WidgetTextName">WidgetId (Cannot change)</label>
+  <input id="WidgetTextName" type="text" class="form-control" placeholder="{{widget._id}}" disabled/>
+  <label for="WidgetTextText">Text</label>
+  <input id="WidgetTextText" type="text" class="form-control" placeholder="Text" [(ngModel)]="widget.text"/>
+  <label for="WidgetTextRows">Rows</label>
+  <input id="WidgetTextRows" type="number" class="form-control" placeholder="3" [(ngModel)]="widget.size"/>
+  <label for="WidgetTextPlaceholder">Placeholder</label>
+  <input id="WidgetTextPlaceholder" type="text" class="form-control" placeholder="Placeholder" [(ngModel)]="widget.placeholder"/>
+  <p></p>
+  <div class="input-group">
+    <label for="formatted" class="form-control">Formatted</label>
+    <span class="input-group-addon">
+        <input [(ngModel)]="widget.formatted" id="formatted" class="pull-right" type="checkbox"/>
+    </span>
+  </div>
+
+  <br/>
+  <a class="btn btn-success btn-block mt-2" (click)="updateWidget()">
+    Update
+  </a>
+  <a class="btn btn-danger btn-block" (click)="deleteWidget()">
+    Delete
+  </a>
+</div>
+
+<nav class="navbar navbar-fixed-bottom navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid justify-content-end">
+    <a routerLink="../../../../../../" class="avbar-link navbar-text cl-icon-padding">
+      <span class="fas fa-user fontawsome_icon"></span>
+    </a>
+  </div>
+</nav>
+
+

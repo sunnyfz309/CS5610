@@ -29,6 +29,9 @@ app.set('port', port);
 const server = http.createServer(app);
 server.listen( port , () => console.log('Running on port 3200'));
 
+// var mongoose = require('mongoose');
+// var db = mongoose.connect('mongodb://localhost:27017/webdev', { useNewUrlParser: true });
+
 require('./assignment/app')(app);
 
 app.get('*', function (req, res) {

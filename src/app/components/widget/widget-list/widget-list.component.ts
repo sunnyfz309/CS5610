@@ -29,14 +29,14 @@ export class WidgetListComponent implements OnInit {
   }
 
   reorderWidgets(indexes) {
-    // call widget service function to update widget as per index
-    this.widgetService.reorderWidgets(indexes.startIndex, indexes.endIndex, this.pageId)
-      .subscribe(
-        (data: any) => {
-          console.log(data);
-          this.widgets = data;
-        }
-      );
+      // call widget service function to update widget as per index
+      this.widgetService.reorderWidgets(indexes.startIndex, indexes.endIndex, this.pageId)
+        .subscribe(
+          (data: any) => {
+            console.log(data);
+            this.widgets = data;
+          }
+        );
   }
 
 }

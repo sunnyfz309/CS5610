@@ -6,6 +6,8 @@ module.exports = function (app) {
   app.put("/api/user/:userId", updateUser);
   app.delete("/api/user/:userId", deleteUser);
 
+  var userModel = require('../model/user/user.model.server');
+
   var users = [
     {_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonderland"  },
     {_id: "234", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley"  },
@@ -13,12 +15,30 @@ module.exports = function (app) {
     {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi" }
   ];
 
+  // function createUser(req, res) {
+  //   var userId = Math.floor(Math.random() * 1000000) + '';
+  //   var user = {_id: userId, username: req.body.username, password: req.body.password,
+  //     firstName: req.body.firstName, lastName: req.body.lastName};
+  //   users.push(user);
+  //   res.json(user);
+  // }
+
   function createUser(req, res) {
-    var userId = Math.floor(Math.random() * 1000000) + '';
-    var user = {_id: userId, username: req.body.username, password: req.body.password,
-      firstName: req.body.firstName, lastName: req.body.lastName};
-    users.push(user);
-    res.json(user);
+    var user = req.body;
+    userModel
+      .createUser(user)
+      .then(
+        function (user) {
+          console.log("user created!");
+          // res.json(user);
+          res.status(200).send(user);
+        },
+        function (error) {
+          if (error) {console.log(error);
+            res.statusCode(400).send(error);
+          }
+        }
+      )
   }
 
   function findUsers(req, res) {

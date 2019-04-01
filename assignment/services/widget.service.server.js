@@ -1,5 +1,8 @@
 module.exports = function (app) {
 
+  var widgetModel = require("../model/widget/widget.model.server");
+  var pageModel = require("../model/page/page.model.server");
+
   app.post("/api/page/:pageId/widget", createWidget);
   app.get("/api/page/:pageId/widget", findAllWidgetsForPage);
   app.get("/api/widget/:widgetId", findWidgetById);
@@ -23,24 +26,35 @@ module.exports = function (app) {
   var widgets = [
     {_id: '123', widgetType: 'HEADING', pageId: '321', size: 2, text: 'GIZMODO'},
     {_id: '234', widgetType: 'HEADING', pageId: '321', size: 4, text: 'Lorem ipsum'},
-    {
-      _id: '345', widgetType: 'IMAGE', pageId: '321', width: '100%',
-      url: 'https://goo.gl/DQBvXg'
-    },
-    // {_id: '456', widgetType: 'HTML', pageId: '321', text: '<p>Lorem ipsum</p>'},
+    {_id: '345', widgetType: 'IMAGE', pageId: '321', width: '100%',
+      url: 'https://goo.gl/DQBvXg'},
+    {_id: '456', widgetType: 'HTML', pageId: '321', text: '<p>HTML sample</p>'},
     {_id: '567', widgetType: 'HEADING', pageId: '321', size: 4, text: 'Lorem ipsum'},
-    {
-      _id: '678', widgetType: 'YOUTUBE', pageId: '321', width: '100%',
-      url: 'https://www.youtube.com/embed/-deQurc3L-g'
-    },
-    {_id: '789', widgetType: 'HEADING', pageId: '321', size: 6, text: 'The End'}
+    {_id: '678', widgetType: 'YOUTUBE', pageId: '321', width: '100%',
+      url: 'https://www.youtube.com/embed/-deQurc3L-g'},
+    {_id: "890", widgetType: "TEXT", pageId: "321", text: "TEXT text example", size: 2,
+      placeholder: "TEXT placeholder example", formatted: true},
+    {_id: '789', widgetType: 'HEADING', pageId: '321', size: 6, text: 'The End'},
   ];
 
+  var n = -1;
+
   function createWidget(req, res) {
-    var widget = req.body;
-    widget._id = (new Date()).getTime() + '';
-    widgets.push(widget);
-    res.json(widget);
+    var pageId = req.params["pageId"];
+    n = n + 1;
+    const widget = {
+      type: req.body.type,
+      position: n
+    };
+    widgetModel.createWidget(pageId, widget)
+      .then(function (widget) {
+        pageModel.findPageById(pageId)
+          .then(function (page) {
+            page.widgets.push(widget);
+            pageModel.updatePage(pageId, page).then();
+          });
+        res.json(widget);
+      });
   }
 
   function findAllWidgetsForPage(req, res) {

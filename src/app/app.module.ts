@@ -7,6 +7,8 @@ import { HttpClientModule} from '@angular/common/http';
 import {SafePipe} from '../../assignment/pipes/safe.pipe';
 import {OrderByPipe} from '../../assignment/pipes/order-by-pipe.pipe';
 import { SortableDirective } from '../../assignment/directives/sortable.directive';
+// import { QuillEditorModule } from 'ngx-quill-editor';
+import { QuillModule } from 'ngx-quill';
 
 // user components
 import { LoginComponent } from './components/user/login/login.component';
@@ -28,14 +30,18 @@ import { WidgetChooserComponent } from './components/widget/widget-chooser/widge
 import { WidgetEditComponent } from './components/widget/widget-edit/widget-edit.component';
 import { WidgetListComponent } from './components/widget/widget-list/widget-list.component';
 import { WidgetHeaderComponent } from './components/widget/widget-edit/widget-header/widget-header.component';
+import { WidgetHtmlComponent} from './components/widget/widget-edit/widget-html/widget-html.component';
 import { WidgetImageComponent } from './components/widget/widget-edit/widget-image/widget-image.component';
+import { WidgetTextComponent } from './components/widget/widget-edit/widget-text/widget-text.component';
 import { WidgetYoutubeComponent } from './components/widget/widget-edit/widget-youtube/widget-youtube.component';
+import {FlickrImageSearchComponent} from './components/widget/widget-edit/widget-image/flickr-image-search/flickr-image-search.component';
 
 // client side services
 import { UserService } from './service/user.service.client';
 import {WebsiteService} from './service/website.service.client';
 import {PageService} from './service/page.service.client';
 import {WidgetService} from './service/widget.service.client';
+import {FlickrService} from './service/flickr.service.client';
 
 @NgModule({
   declarations: [
@@ -53,7 +59,10 @@ import {WidgetService} from './service/widget.service.client';
     WidgetEditComponent,
     WidgetListComponent,
     WidgetHeaderComponent,
+    WidgetHtmlComponent,
     WidgetImageComponent,
+    FlickrImageSearchComponent,
+    WidgetTextComponent,
     WidgetYoutubeComponent,
     SafePipe,
     OrderByPipe,
@@ -63,13 +72,15 @@ import {WidgetService} from './service/widget.service.client';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    QuillModule
   ],
   providers: [
     UserService,
     WebsiteService,
     PageService,
-    WidgetService
+    WidgetService,
+    FlickrService
   ],
   bootstrap: [AppComponent]
 })

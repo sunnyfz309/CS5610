@@ -1,82 +1,3 @@
-<!--<nav class="navbar navbar-fixed-top navbar-expand-lg navbar-light bg-light">-->
-  <!--<div class = "container-fluid row">-->
-    <!--<a routerLink="../../" class="navbar-text black-text pull-left icon-padding">-->
-      <!--<span class="fas fa-chevron-left fontawsome_icon"></span>-->
-    <!--</a>-->
-    <!--<a routerLink="./" class="navbar-brand">Widgets</a>-->
-    <!--<a routerLink="./new" class="black-text navbar-text pull-right icon-padding">-->
-      <!--<span class="fas fa-plus fontawsome_icon"></span>-->
-    <!--</a>-->
-  <!--</div>-->
-<!--</nav>-->
-
-<!--<div class="container container-padding">-->
-  <!--<div class="widget" *ngFor="let wid of widgets">-->
-    <!--<div class="widget-icons">-->
-      <!--<a routerLink="./{{wid._id}}" class="pull-right">-->
-      <!--<span class="fas fa-bars fontawsome_icon float-right"></span>-->
-      <!--</a>-->
-      <!--<a routerLink="./{{wid._id}}" class="pull-right">-->
-        <!--<span class="fas fa-cog fontawsome_icon float-right"></span>-->
-      <!--</a>-->
-    <!--</div>-->
-    <!--<div [ngSwitch]="wid.widgetType">-->
-      <!--<div *ngSwitchCase="'HTML'">-->
-        <!--<p>{{wid.text}}</p>-->
-      <!--</div>-->
-      <!--<div *ngSwitchCase="'HEADING'">-->
-        <!--<div [ngSwitch]="wid.size">-->
-          <!--<div *ngSwitchCase="'1'">-->
-            <!--<h1>{{wid.text}}</h1>-->
-          <!--</div>-->
-          <!--<div *ngSwitchCase="'2'">-->
-            <!--<h2>{{wid.text}}</h2>-->
-          <!--</div>-->
-          <!--<div *ngSwitchCase="'3'">-->
-            <!--<h3>{{wid.text}}</h3>-->
-          <!--</div>-->
-          <!--<div *ngSwitchCase="'4'">-->
-            <!--<h4>{{wid.text}}</h4>-->
-          <!--</div>-->
-          <!--<div *ngSwitchCase="'5'">-->
-            <!--<h5>{{wid.text}}</h5>-->
-          <!--</div>-->
-          <!--<div *ngSwitchCase="'6'">-->
-            <!--<h6>{{wid.text}}</h6>-->
-          <!--</div>-->
-          <!--<div *ngSwitchDefault>-->
-            <!--<h1>{{wid.text}}</h1>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-      <!--<div *ngSwitchCase="'IMAGE'">-->
-        <!--<img class="img-responsive img-rounded cl-widget-images" width="{{wid.width}}" [src]="wid.url | safe">-->
-      <!--</div>-->
-      <!--<div *ngSwitchCase="'YOUTUBE'">-->
-        <!--<div class="embed-responsive embed-responsive-16by9">-->
-          <!--<iframe width="{{wid.width}}" height="315" [src]="wid.url | safe" frameborder="0" allowfullscreen></iframe>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
-
-<!--<nav class="navbar navbar-fixed-bottom navbar-light bg-light">-->
-  <!--<div>-->
-    <!--<a href="#" class="navbar-link navbar-text cl-icon-padding mr-3">-->
-      <!--<span class="fas fa-play fontawsome_icon"></span>-->
-    <!--</a>-->
-    <!--<a href="#" class="navbar-link navbar-text cl-icon-padding">-->
-      <!--<span class="fas fa-eye fontawsome_icon"></span>-->
-    <!--</a>-->
-  <!--</div>-->
-  <!--<div class="justify-content-end">-->
-    <!--<a routerLink="../../../../../" class="navbar-text pull-right icon-padding">-->
-      <!--<span class="fas fa-user fontawsome_icon"></span>-->
-    <!--</a>-->
-  <!--</div>-->
-<!--</nav>-->
-
 <nav class="navbar navbar-fixed-top navbar-expand-lg navbar-light bg-light">
   <div class = "container-fluid row">
     <a routerLink="../../" class="navbar-text black-text pull-left icon-padding">
@@ -133,6 +54,17 @@
           <div class="embed-responsive embed-responsive-16by9">
             <iframe width="560" height="315" [src]="wid.url | safe" frameborder="0" allowfullscreen></iframe>
           </div>
+        </div>
+        <div *ngSwitchCase="'HTML'" [innerHTML]="wid.text"></div>
+        <div *ngSwitchCase="'TEXT'">
+          <div *ngIf="wid.formatted">
+            <quill-editor [(ngModel)]="wid.text"></quill-editor>
+          </div>
+          <input *ngIf="!wid.formatted && (!wid.size || wid.size===1)"
+                 placeholder="{{wid.placeholder}}" class="form-control"/>
+          <textarea *ngIf="!wid.formatted && (wid.size > 1)"
+                    rows="{{wid.size}}" placeholder="{{wid.placeholder}}"
+                    class="form-control">{{wid.text}}</textarea>
         </div>
       </div>
     </li>

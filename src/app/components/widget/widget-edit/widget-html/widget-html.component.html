@@ -1,0 +1,37 @@
+<nav class="navbar navbar-fixed-top navbar-expand-lg navbar-light bg-light">
+  <div class = "container-fluid row">
+    <a routerLink="../" class="navbar-text white-text pull-left icon-padding">
+      <span class="fas fa-chevron-left fontawsome_icon"></span>
+    </a>
+    <a routerLink="./" class="navbar-brand">Widget Edit</a>
+    <a (click)="updateWidget()" class="black-text navbar-text pull-right icon-padding">
+      <span class="fas fa-check fontawsome_icon"></span>
+    </a>
+  </div>
+</nav>
+
+<div class="container container-padding">
+  <label for="WidgetHtmlName">WidgetId (Cannot change)</label>
+  <input id="WidgetHtmlName" type="text" class="form-control" placeholder="{{widget._id}}" disabled/>
+  <label>HTML</label>
+  <quill-editor [(ngModel)]="widget.text"></quill-editor>
+  <br/>
+
+  <a class="btn btn-success btn-block mt-2" (click)="updateWidget()">
+    Update
+  </a>
+  <a class="btn btn-danger btn-block" (click)="deleteWidget()">
+    Delete
+  </a>
+</div>
+
+<nav class="navbar navbar-fixed-bottom navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid justify-content-end">
+    <a routerLink="../../../../../../" class="avbar-link navbar-text cl-icon-padding">
+      <span class="fas fa-user fontawsome_icon"></span>
+    </a>
+  </div>
+</nav>
+
+
+

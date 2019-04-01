@@ -12,6 +12,7 @@ import {PageNewComponent} from './components/page/page-new/page-new.component';
 import {WidgetChooserComponent} from './components/widget/widget-chooser/widget-chooser.component';
 import {WidgetEditComponent} from './components/widget/widget-edit/widget-edit.component';
 import {WidgetListComponent} from './components/widget/widget-list/widget-list.component';
+import {FlickrImageSearchComponent} from './components/widget/widget-edit/widget-image/flickr-image-search/flickr-image-search.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -27,7 +28,8 @@ const routes: Routes = [
   {path: 'profile/:userId/website/:wid/page/:pid', component: PageEditComponent},
   {path: 'profile/:userId/website/:wid/page/:pid/widget', component: WidgetListComponent},
   {path: 'profile/:userId/website/:wid/page/:pid/widget/new', component: WidgetChooserComponent},
-  {path: 'profile/:userId/website/:wid/page/:pid/widget/:wgid', component: WidgetEditComponent}
+  {path: 'profile/:userId/website/:wid/page/:pid/widget/:wgid', component: WidgetEditComponent},
+  {path: 'profile/:userId/website/:wid/page/:pid/widget/:wgid/flickr', component: FlickrImageSearchComponent}
   ];
 
 @NgModule({
