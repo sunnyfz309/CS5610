@@ -7,6 +7,51 @@ module.exports = function (app) {
   app.delete("/api/user/:userId", deleteUser);
 
   var userModel = require('../model/user/user.model.server');
+  var passport = require('passport');
+
+  // config passport
+  passport.serializeUser(serializeUser);
+  passport.deserializeUser(deserializeUser);
+
+  function serializeUser(user, done) {
+    done(null, user);
+  }
+
+  function deserializeUser(user, done) {
+    userModel
+      .findUserById(user._id)
+      .then(
+        function (user) {
+          done(null, user);
+        },
+        function (err) {
+          done(err, null);
+        }
+      );
+  }
+
+  // passport local strategy
+  var LocalStrategy = require('passport-local').Strategy;
+  passport.use(new LocalStrategy(localStrategy));
+
+  function localStrategy(username, password, done) {
+    userModel
+      .findUserByUsername(username)
+      .then(
+        function (user) {
+          if (user && bcrypt.compareSync(password, user.password)) {
+            return done(null, user);
+          } else {
+            return done(null, false);
+          }
+        },
+        function (err) {
+          if (err) {
+            return done(err);
+          }
+        }
+      );
+  }
 
   var users = [
     {_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonderland"  },
