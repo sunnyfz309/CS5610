@@ -41,7 +41,11 @@ export class UserService {
       username: username,
       password: password
     };
-    return this._http.post(this.baseUrl + '/api/login', body);
+    return this._http.post(this.baseUrl + '/api/login', body, { withCredentials: true });
+  }
+
+  logout() {
+    return this._http.post(this.baseUrl + '/api/logout', '', { withCredentials: true });
   }
 
   register(username: string, password: string) {

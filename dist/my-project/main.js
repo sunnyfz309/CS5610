@@ -705,30 +705,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _service_user_service_client__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../service/user.service.client */ "./src/app/service/user.service.client.ts");
+/* harmony import */ var _service_shared_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../service/shared.service */ "./src/app/service/shared.service.ts");
+
 
 
 
 
 
 var LoginComponent = /** @class */ (function () {
-    function LoginComponent(userService, router) {
+    function LoginComponent(userService, router, sharedService) {
         this.userService = userService;
         this.router = router;
+        this.sharedService = sharedService;
         this.errorMsg = 'Invalid username or password !';
     }
     LoginComponent.prototype.login = function () {
         var _this = this;
         this.username = this.loginForm.value.username;
         this.password = this.loginForm.value.password;
-        this.userService.findUserByCredentials(this.username, this.password)
+        this.userService.login(this.username, this.password)
             .subscribe(function (user) {
-            if (user) {
-                _this.router.navigate(['/profile', user._id]);
-            }
-            else {
-                _this.errorFlag = true;
-            }
-        }, function (error) { return console.log(error); });
+            _this.sharedService.user = user;
+            _this.router.navigate(['/profile']);
+        }, function (error) {
+            console.log(error);
+            _this.errorFlag = true;
+        });
     };
     LoginComponent.prototype.ngOnInit = function () {
     };
@@ -742,7 +744,9 @@ var LoginComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./login.component.html */ "./src/app/components/user/login/login.component.html"),
             styles: [__webpack_require__(/*! ./login.component.css */ "./src/app/components/user/login/login.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_service_user_service_client__WEBPACK_IMPORTED_MODULE_4__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_service_user_service_client__WEBPACK_IMPORTED_MODULE_4__["UserService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
+            _service_shared_service__WEBPACK_IMPORTED_MODULE_5__["SharedService"]])
     ], LoginComponent);
     return LoginComponent;
 }());
@@ -830,6 +834,11 @@ var ProfileComponent = /** @class */ (function () {
         this.userService.deleteUser(this.userId).subscribe(function () {
             _this.router.navigate(['/login']);
         }, function (error) { return console.log(error); });
+    };
+    ProfileComponent.prototype.logout = function () {
+        var _this = this;
+        this.userService.logout()
+            .subscribe(function (data) { return _this.router.navigate(['/login']); }, function (error) { return console.log(error); });
     };
     ProfileComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -2181,6 +2190,34 @@ var PageService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/service/shared.service.ts":
+/*!*******************************************!*\
+  !*** ./src/app/service/shared.service.ts ***!
+  \*******************************************/
+/*! exports provided: SharedService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SharedService", function() { return SharedService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+var SharedService = /** @class */ (function () {
+    function SharedService() {
+        this.user = '';
+    }
+    SharedService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()
+    ], SharedService);
+    return SharedService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/service/user.service.client.ts":
 /*!************************************************!*\
   !*** ./src/app/service/user.service.client.ts ***!
@@ -2228,7 +2265,10 @@ var UserService = /** @class */ (function () {
             username: username,
             password: password
         };
-        return this._http.post(this.baseUrl + '/api/login', body);
+        return this._http.post(this.baseUrl + '/api/login', body, { withCredentials: true });
+    };
+    UserService.prototype.logout = function () {
+        return this._http.post(this.baseUrl + '/api/logout', '', { withCredentials: true });
     };
     UserService.prototype.register = function (username, password) {
         var body = {

@@ -1,13 +1,15 @@
 module.exports = function (app) {
 
+  var userModel = require('../model/user/user.model.server');
+  var passport = require('passport');
+
   app.post("/api/user", createUser);
   app.get("/api/user", findUsers);
   app.get("/api/user/:userId", findUserById);
   app.put("/api/user/:userId", updateUser);
   app.delete("/api/user/:userId", deleteUser);
-
-  var userModel = require('../model/user/user.model.server');
-  var passport = require('passport');
+  app.post ('/api/login', passport.authenticate('local'), login);
+  app.post('/api/logout', logout);
 
   // config passport
   passport.serializeUser(serializeUser);
@@ -53,20 +55,15 @@ module.exports = function (app) {
       );
   }
 
-  var users = [
-    {_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonderland"  },
-    {_id: "234", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley"  },
-    {_id: "345", username: "charly",   password: "charly",   firstName: "Charly", lastName: "Garcia"  },
-    {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi" }
-  ];
+  function login(req, res) {
+    var user = req.user;
+    res.json(user);
+  }
 
-  // function createUser(req, res) {
-  //   var userId = Math.floor(Math.random() * 1000000) + '';
-  //   var user = {_id: userId, username: req.body.username, password: req.body.password,
-  //     firstName: req.body.firstName, lastName: req.body.lastName};
-  //   users.push(user);
-  //   res.json(user);
-  // }
+  function logout(req, res) {
+    req.logout();
+    res.send(200); //success
+  }
 
   function createUser(req, res) {
     var user = req.body;
@@ -135,6 +132,14 @@ module.exports = function (app) {
     }), 1);
     res.send(200);
   }
+
+  var users = [
+    {_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonderland"  },
+    {_id: "234", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley"  },
+    {_id: "345", username: "charly",   password: "charly",   firstName: "Charly", lastName: "Garcia"  },
+    {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi" }
+  ];
+
 
 };
 

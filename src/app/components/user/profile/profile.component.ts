@@ -59,4 +59,12 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  logout() {
+    this.userService.logout()
+      .subscribe(
+        (data: any) => this.router.navigate(['/login']),
+        (error: any) => console.log(error)
+      );
+  }
+
 }
