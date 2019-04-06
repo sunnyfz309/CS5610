@@ -10,6 +10,7 @@ module.exports = function (app) {
   app.delete("/api/user/:userId", deleteUser);
   app.post ('/api/login', passport.authenticate('local'), login);
   app.post('/api/logout', logout);
+  app.post ('/api/register', register);
 
   // config passport
   passport.serializeUser(serializeUser);
@@ -63,6 +64,25 @@ module.exports = function (app) {
   function logout(req, res) {
     req.logout();
     res.send(200); //success
+  }
+
+  function register(req, res) {
+    var user = req.body;
+    userModel
+      .createUser(user)
+      .then(
+        function (user) {
+          if (user) {
+            req.login(user, function (err) {
+              if (err) {
+                res.status(400).send(err);
+              } else {
+                res.json(user);
+              }
+            });
+          }
+        }
+      );
   }
 
   function createUser(req, res) {

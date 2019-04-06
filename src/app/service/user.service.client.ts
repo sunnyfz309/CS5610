@@ -49,11 +49,11 @@ export class UserService {
   }
 
   register(username: string, password: string) {
-    const body = {
+    const user = {
       username: username,
       password: password
     };
-    return this._http.post(this.baseUrl + '/api/user', body);
+    return this._http.post(this.baseUrl + '/api/register', user, { withCredentials: true });
   }
 
 }

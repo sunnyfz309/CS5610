@@ -893,9 +893,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _models_user_model_client__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../models/user.model.client */ "./src/app/models/user.model.client.ts");
-/* harmony import */ var _service_user_service_client__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../service/user.service.client */ "./src/app/service/user.service.client.ts");
-
+/* harmony import */ var _service_user_service_client__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../service/user.service.client */ "./src/app/service/user.service.client.ts");
 
 
 
@@ -913,11 +911,12 @@ var RegisterComponent = /** @class */ (function () {
         this.password = this.registerForm.value.password;
         this.vpassword = this.registerForm.value.vpassword;
         if (this.vpassword === this.password) {
-            var user = new _models_user_model_client__WEBPACK_IMPORTED_MODULE_4__["User"]('', this.username, this.password, '', '');
-            this.userService.createUser(user).subscribe(function (data) {
+            this.userService.register(this.username, this.password).subscribe(function (data) {
                 _this.errorFlag = false;
-                _this.router.navigate(['/profile', data._id]);
-            }, function (error) { return console.log(error); });
+                _this.router.navigate(['/profile']);
+            }, function (error) {
+                console.log(error);
+            });
         }
         else {
             this.errorFlag = true;
@@ -935,7 +934,7 @@ var RegisterComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./register.component.html */ "./src/app/components/user/register/register.component.html"),
             styles: [__webpack_require__(/*! ./register.component.css */ "./src/app/components/user/register/register.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_service_user_service_client__WEBPACK_IMPORTED_MODULE_5__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_service_user_service_client__WEBPACK_IMPORTED_MODULE_4__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], RegisterComponent);
     return RegisterComponent;
 }());
@@ -2271,11 +2270,11 @@ var UserService = /** @class */ (function () {
         return this._http.post(this.baseUrl + '/api/logout', '', { withCredentials: true });
     };
     UserService.prototype.register = function (username, password) {
-        var body = {
+        var user = {
             username: username,
             password: password
         };
-        return this._http.post(this.baseUrl + '/api/user', body);
+        return this._http.post(this.baseUrl + '/api/register', user, { withCredentials: true });
     };
     UserService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
