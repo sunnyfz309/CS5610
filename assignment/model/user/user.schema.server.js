@@ -9,7 +9,11 @@ var UserSchema = mongoose.Schema({
   email: String,
   phone: String,
   websites: [websiteSchema],
-  dateCreated: {type: Date, default: Date.now}
+  dateCreated: {type: Date, default: Date.now},
+  facebook: {
+    id:    String,
+    token: String
+  }
 }, {collection:'user'});
 
 module.exports = UserSchema;
