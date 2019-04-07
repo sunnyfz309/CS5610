@@ -1,5 +1,4 @@
 // Get the dependencies
-
 const express = require('express');
 const path = require('path');
 const http = require('http');
@@ -7,21 +6,20 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // loading authentication modules
-const passport      = require('passport');
-const cookieParser  = require('cookie-parser');
-const session       = require('express-session');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
-var secret = "random";
-if (process.env.SESSION_SECRET) {
-  secret = process.env.SESSION_SECRET;
-}
-app.use(session({
-  secret: secret,
-  resave: true,
-  saveUninitialized: true
-}));
-// app.use(session({ secret: process.env.SESSION_SECRET }));?
-
+// var secret = "random";
+// if (process.env.SESSION_SECRET) {
+//   secret = process.env.SESSION_SECRET;
+// }
+// app.use(session({
+//   secret: secret,
+//   resave: true,
+//   saveUninitialized: true
+// }));
+app.use(session({secret: 'secret: process.env.SESSION_SECRET '}));
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
