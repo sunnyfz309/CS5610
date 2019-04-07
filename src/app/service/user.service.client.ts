@@ -65,10 +65,9 @@ export class UserService {
     return this._http.post(this.baseUrl + '/api/loggedIn', '', { withCredentials: true })
       .pipe(
         map(
-          (res: any) => {
-            const user = res.json();
+          (user: any) => {
             if (user !== 0) {
-              this.sharedService.user = user; // setting user so as to share with all components
+              this.sharedService.user = user;
               return true;
             } else {
               this.router.navigate(['/login']);
