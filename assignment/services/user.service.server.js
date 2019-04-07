@@ -40,7 +40,7 @@ module.exports = function (app) {
       );
   }
 
-  // passport local strategy
+  // config local strategy
   var LocalStrategy = require('passport-local').Strategy;
   passport.use(new LocalStrategy(localStrategy));
 
@@ -63,7 +63,7 @@ module.exports = function (app) {
       );
   }
 
-  // passport facebook strategy
+  // config facebook strategy
   var facebookConfig = {
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
