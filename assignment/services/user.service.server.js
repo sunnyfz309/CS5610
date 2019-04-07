@@ -1,25 +1,23 @@
 module.exports = function (app) {
 
-  var userModel = require('../model/user/user.model.server');
+  var userModel = require("../model/user/user.model.server");
   var passport = require('passport');
   var FacebookStrategy = require('passport-facebook').Strategy;
   var bcrypt = require("bcrypt-nodejs");
 
-  app.post("/api/user", createUser);
-  app.get("/api/user", findUsers);
+  app.post('/api/login', passport.authenticate('local'), login);
+  app.post('/api/logout', logout);
+  app.post('/api/register', register);
+  app.post('/api/loggedin', loggedin);
   app.get("/api/user/:userId", findUserById);
   app.put("/api/user/:userId", updateUser);
   app.delete("/api/user/:userId", deleteUser);
-
-  app.post ('/api/login', passport.authenticate('local'), login);
-  app.post('/api/logout', logout);
-  app.post ('/api/register', register);
-  app.get ('/api/loggedin', loggedin);
   app.get('/facebook/login', passport.authenticate('facebook', {scope: 'email'}));
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
     successRedirect: '/profile',
     failureRedirect: '/login'
   }));
+
 
   // config passport
   passport.serializeUser(serializeUser);
@@ -65,7 +63,7 @@ module.exports = function (app) {
       );
   }
 
-  // config facebook strategy
+  // passport facebook strategy
   var facebookConfig = {
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
@@ -103,27 +101,12 @@ module.exports = function (app) {
     });
   }
 
-  function login(req, res) {
-    var user = req.user;
-    res.json(user);
-  }
-
-  function loggedin(req, res) {
-    res.send(req.isAuthenticated() ? req.user : '0');
-  }
-
-  function logout(req, res) {
-    req.logout();
-    res.send(200); //success
-  }
 
   function register(req, res) {
     var user = req.body;
     user.password = bcrypt.hashSync(user.password);
-    userModel
-      .createUser(user)
-      .then(
-        function (user) {
+    userModel.createUser(user)
+      .then(function (user) {
           if (user) {
             req.login(user, function (err) {
               if (err) {
@@ -137,72 +120,45 @@ module.exports = function (app) {
       );
   }
 
-  function createUser(req, res) {
-    var user = req.body;
-    userModel
-      .createUser(user)
-      .then(
-        function (user) {
-          console.log("user created!");
-          // res.json(user);
-          res.status(200).send(user);
-        },
-        function (error) {
-          if (error) {console.log(error);
-            res.statusCode(400).send(error);
-          }
-        }
-      )
+  function login(req, res) {
+    var user = req.user;
+    res.json(user);
   }
 
-  function findUsers(req, res) {
-    var username = req.query.username;
-    var password = req.query.password;
-    var user = null;
-    if (username && password) {
-      user =  users.find( function (user) {
-        return user.username === username && user.password === password;
-      });
-    } else if (username) {
-      user = users.find(function(user) {
-        return user.username === username;
-      });
-    }
-    res.json(user);
+  function logout(req, res) {
+    req.logOut();
+    res.send(200);
+  }
+
+  function loggedin(req, res) {
+    res.send(req.isAuthenticated() ? req.user : '0');
   }
 
   function findUserById(req, res) {
     var userId = req.params["userId"];
-    var user = users.find(function (user) {
-      return user._id === userId;
-    });
-    console.log(user.username);
-    res.json(user);
+    userModel.findUserById(userId)
+      .then(function (user) {
+        res.json(user);
+      })
   }
 
   function updateUser(req, res) {
     var userId = req.params["userId"];
     var user = req.body;
-
-    for (var i = 0; i < users.length; i++) {
-      if (users[i]._id === userId) {
-        users[i].username = user.username;
-        users[i].password = user.password;
-        users[i].firstName = user.firstName;
-        users[i].lastName = user.lastName;
-        res.status(200).send(user);
-        return;
-      }
-    }
-    res.status(404).send("not found!");
+    userModel.updateUser(userId, user)
+      .exec();
+    userModel.findUserById(userId)
+      .then(function (user) {
+        res.json(user);
+      });
   }
 
   function deleteUser(req, res) {
     var userId = req.params["userId"];
-    users.splice(users.findIndex(function(user) {
-      return user._id === userId;
-    }), 1);
-    res.send(200);
+    userModel.deleteUser(userId)
+      .then(function (status) {
+        res.send(status);
+      });
   }
 
   var users = [
