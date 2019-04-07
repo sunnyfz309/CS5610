@@ -48,13 +48,14 @@ app.set('port', port);
 
 // Create HTTP server
 const server = http.createServer(app);
-server.listen( port , () => console.log('Running on port 3200'));
-
-// var mongoose = require('mongoose');
-// var db = mongoose.connect('mongodb://localhost:27017/webdev', { useNewUrlParser: true });
 
 require('./assignment/app')(app);
 
+// For Build: Catch all other routes and return the index file -- BUILDING
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
+
+server.listen( port , function() {
+  console.log('Node app is running on port', app.get('port'))});
+
