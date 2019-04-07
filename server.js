@@ -10,16 +10,9 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
-// var secret = "random";
-// if (process.env.SESSION_SECRET) {
-//   secret = process.env.SESSION_SECRET;
-// }
-// app.use(session({
-//   secret: secret,
-//   resave: true,
-//   saveUninitialized: true
-// }));
-app.use(session({secret: 'secret: process.env.SESSION_SECRET '}));
+// app.use(session({secret: 'secret: process.env.SESSION_SECRET '}));
+const secret = !!process.env.SESSION_SECRET ? process.env.SESSION_SECRET : 'local_secret';
+app.use(session({ secret: secret}));
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
