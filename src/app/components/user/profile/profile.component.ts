@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {User} from '../../../models/user.model.client';
 import {UserService} from '../../../service/user.service.client';
+import {SharedService} from '../../../service/shared.service';
 
 @Component({
   selector: 'app-profile',
@@ -21,37 +22,36 @@ export class ProfileComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private sharedService: SharedService) {
     this.user = new User('', '', '', '', '');
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.userId = params['userId'];
-      this.userService.findUserById(this.userId).subscribe(
-        (user: User) => {
-          this.user = user;
-        },
-        (error: any) => console.log('PROFILE:\n' + error)
-      );
-    });
+    this.user = this.sharedService.user;
+    this.errorFlag = false;
+    this.updateFlag = false;
   }
 
   updateUser() {
-    if (this.user.username && this.user.password) {
-      this.userService.updateUser(this.userId, this.user).subscribe(
-        (user: User) => {
-          this.user = user;
-          this.updateFlag = true;
-        },
-        (error: any) => console.log(error));
-    } else {
+    this.errorFlag = false;
+    this.updateFlag = false;
+    if (!this.user.username || !this.user.password) {
       this.errorFlag = true;
+      this.updateFlag = false;
+      return;
     }
+    this.userService.updateUser(this.user._id, this.user).subscribe(
+      (user: User) => {
+        this.user = user;
+        this.updateFlag = true;
+        this.errorFlag = false;
+      },
+      (error: any) => console.log(error));
   }
 
   deleteUser() {
-    this.userService.deleteUser(this.userId).subscribe(
+    this.userService.deleteUser(this.user._id).subscribe(
       () => {
         this.router.navigate(['/login']);
       },

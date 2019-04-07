@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {Website} from '../../../models/website.model.client';
 import {WebsiteService} from '../../../service/website.service.client';
+import {User} from '../../../models/user.model.client';
+import {SharedService} from '../../../service/shared.service';
 
 @Component({
   selector: 'app-website-new',
@@ -11,20 +13,21 @@ import {WebsiteService} from '../../../service/website.service.client';
 })
 export class WebsiteNewComponent implements OnInit {
   @ViewChild('w') webForm: NgForm;
-  developerId: string;
   websiteName: string;
   websiteDescription: string;
   websites: Website[];
+  user: User;
 
   constructor(
     private websiteService: WebsiteService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private sharedService: SharedService) { }
 
   ngOnInit() {
+    this.user = this.sharedService.user;
     this.route.params.subscribe(params => {
-      this.developerId = params['userId'];
-      this.websiteService.findWebsitesByUser(this.developerId).subscribe(
+      this.websiteService.findWebsitesByUser(this.user._id).subscribe(
         (websites: Website[]) => {
           this.websites = websites;
         },
@@ -36,13 +39,14 @@ export class WebsiteNewComponent implements OnInit {
   createWebsite() {
     this.websiteName = this.webForm.value.websiteName;
     this.websiteDescription = this.webForm.value.websiteDescription;
-    let website = new Website('', this.websiteName, this.developerId, this.websiteDescription);
-    this.websiteService.createWebsite(this.developerId, website).subscribe(
+    const website = new Website('', this.websiteName, this.user._id, this.websiteDescription);
+    this.websiteService.createWebsite(this.user._id, website).subscribe(
       (data: any) => {
-        this.router.navigate(['/profile', this.developerId, 'website']);
+        this.router.navigate(['/profile/website']);
       },
       (error: any) => console.log(error)
     );
   }
+
 
 }

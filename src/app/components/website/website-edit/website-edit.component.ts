@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Website} from '../../../models/website.model.client';
 import {WebsiteService} from '../../../service/website.service.client';
+import {SharedService} from '../../../service/shared.service';
 
 @Component({
   selector: 'app-website-edit',
@@ -13,11 +14,14 @@ export class WebsiteEditComponent implements OnInit {
   websiteId: string;
   website: Website;
   websites: Website[];
+  errorFlag = false;
+  errorMsg = 'Website name cannot be empty!';
 
   constructor(
     private websiteService: WebsiteService,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private sharedService: SharedService) {
     this.website = new Website('', '', '', '');
   }
 
@@ -30,7 +34,7 @@ export class WebsiteEditComponent implements OnInit {
         },
         (error: any) => console.log(error)
       );
-      this.websiteService.findWebsitesByUser(params['uid']).subscribe(
+      this.websiteService.findWebsitesByUser(this.sharedService.user._id).subscribe(
         (websites: Website[]) => {
           this.websites = websites;
         },
@@ -40,10 +44,14 @@ export class WebsiteEditComponent implements OnInit {
   }
 
   updateWebsite() {
+    if (!this.website.name) {
+      this.errorFlag = true;
+      return;
+    }
     this.websiteService.updateWebsite(this.websiteId, this.website).subscribe(
       (website: Website) => {
         this.website = website;
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.router.navigate(['../'], {relativeTo: this.route});
       },
       (error: any) => console.log(error)
     );
@@ -52,7 +60,7 @@ export class WebsiteEditComponent implements OnInit {
   deleteWebsite() {
     this.websiteService.deleteWebsite(this.websiteId).subscribe(
       () => {
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.router.navigate(['../'], {relativeTo: this.route});
       },
       (error: any) => console.log(error)
     );
