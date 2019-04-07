@@ -20,16 +20,16 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
-  {path: 'profile/website', component: WebsiteListComponent, canActivate: [AuthGuard]},
-  {path: 'profile/website/new', component: WebsiteNewComponent, canActivate: [AuthGuard]},
-  {path: 'profile/website/:wid', component: WebsiteEditComponent, canActivate: [AuthGuard]},
-  {path: 'profile/website/:wid/page', component: PageListComponent, canActivate: [AuthGuard]},
-  {path: 'profile/website/:wid/page/new', component: PageNewComponent, canActivate: [AuthGuard]},
-  {path: 'profile/website/:wid/page/:pid', component: PageEditComponent, canActivate: [AuthGuard]},
-  {path: 'profile/website/:wid/page/:pid/widget', component: WidgetListComponent, canActivate: [AuthGuard]},
-  {path: 'profile/website/:wid/page/:pid/widget/new', component: WidgetChooserComponent, canActivate: [AuthGuard]},
-  {path: 'profile/website/:wid/page/:pid/widget/:wgid', component: WidgetEditComponent, canActivate: [AuthGuard]},
-  {path: 'profile/website/:wid/page/:pid/widget/:wgid/flickr', component: FlickrImageSearchComponent, canActivate: [AuthGuard]}
+  {path: 'profile/:userId/:uid/website', component: WebsiteListComponent},
+  {path: 'profile/:userId/website/new', component: WebsiteNewComponent},
+  {path: 'profile/:userId/website/:wid', component: WebsiteEditComponent},
+  {path: 'profile/:userId/website/:wid/page', component: PageListComponent},
+  {path: 'profile/:userId/website/:wid/page/new', component: PageNewComponent},
+  {path: 'profile/:userId/website/:wid/page/:pid', component: PageEditComponent},
+  {path: 'profile/:userId/website/:wid/page/:pid/widget', component: WidgetListComponent},
+  {path: 'profile/:userId/website/:wid/page/:pid/widget/new', component: WidgetChooserComponent},
+  {path: 'profile/:userId/website/:wid/page/:pid/widget/:wgid', component: WidgetEditComponent},
+  {path: 'profile/:userId/website/:wid/page/:pid/widget/:wgid/flickr', component: FlickrImageSearchComponent}
   ];
 
 @NgModule({

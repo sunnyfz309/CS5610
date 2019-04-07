@@ -207,16 +207,16 @@ var routes = [
     { path: 'login', component: _components_user_login_login_component__WEBPACK_IMPORTED_MODULE_3__["LoginComponent"] },
     { path: 'register', component: _components_user_register_register_component__WEBPACK_IMPORTED_MODULE_5__["RegisterComponent"] },
     { path: 'profile', component: _components_user_profile_profile_component__WEBPACK_IMPORTED_MODULE_4__["ProfileComponent"], canActivate: [_service_auth_gaurd_service__WEBPACK_IMPORTED_MODULE_16__["AuthGuard"]] },
-    { path: 'profile/website', component: _components_website_website_list_website_list_component__WEBPACK_IMPORTED_MODULE_6__["WebsiteListComponent"], canActivate: [_service_auth_gaurd_service__WEBPACK_IMPORTED_MODULE_16__["AuthGuard"]] },
-    { path: 'profile/website/new', component: _components_website_website_new_website_new_component__WEBPACK_IMPORTED_MODULE_8__["WebsiteNewComponent"], canActivate: [_service_auth_gaurd_service__WEBPACK_IMPORTED_MODULE_16__["AuthGuard"]] },
-    { path: 'profile/website/:wid', component: _components_website_website_edit_website_edit_component__WEBPACK_IMPORTED_MODULE_7__["WebsiteEditComponent"], canActivate: [_service_auth_gaurd_service__WEBPACK_IMPORTED_MODULE_16__["AuthGuard"]] },
-    { path: 'profile/website/:wid/page', component: _components_page_page_list_page_list_component__WEBPACK_IMPORTED_MODULE_9__["PageListComponent"], canActivate: [_service_auth_gaurd_service__WEBPACK_IMPORTED_MODULE_16__["AuthGuard"]] },
-    { path: 'profile/website/:wid/page/new', component: _components_page_page_new_page_new_component__WEBPACK_IMPORTED_MODULE_11__["PageNewComponent"], canActivate: [_service_auth_gaurd_service__WEBPACK_IMPORTED_MODULE_16__["AuthGuard"]] },
-    { path: 'profile/website/:wid/page/:pid', component: _components_page_page_edit_page_edit_component__WEBPACK_IMPORTED_MODULE_10__["PageEditComponent"], canActivate: [_service_auth_gaurd_service__WEBPACK_IMPORTED_MODULE_16__["AuthGuard"]] },
-    { path: 'profile/website/:wid/page/:pid/widget', component: _components_widget_widget_list_widget_list_component__WEBPACK_IMPORTED_MODULE_14__["WidgetListComponent"], canActivate: [_service_auth_gaurd_service__WEBPACK_IMPORTED_MODULE_16__["AuthGuard"]] },
-    { path: 'profile/website/:wid/page/:pid/widget/new', component: _components_widget_widget_chooser_widget_chooser_component__WEBPACK_IMPORTED_MODULE_12__["WidgetChooserComponent"], canActivate: [_service_auth_gaurd_service__WEBPACK_IMPORTED_MODULE_16__["AuthGuard"]] },
-    { path: 'profile/website/:wid/page/:pid/widget/:wgid', component: _components_widget_widget_edit_widget_edit_component__WEBPACK_IMPORTED_MODULE_13__["WidgetEditComponent"], canActivate: [_service_auth_gaurd_service__WEBPACK_IMPORTED_MODULE_16__["AuthGuard"]] },
-    { path: 'profile/website/:wid/page/:pid/widget/:wgid/flickr', component: _components_widget_widget_edit_widget_image_flickr_image_search_flickr_image_search_component__WEBPACK_IMPORTED_MODULE_15__["FlickrImageSearchComponent"], canActivate: [_service_auth_gaurd_service__WEBPACK_IMPORTED_MODULE_16__["AuthGuard"]] }
+    { path: 'profile/:userId/:uid/website', component: _components_website_website_list_website_list_component__WEBPACK_IMPORTED_MODULE_6__["WebsiteListComponent"] },
+    { path: 'profile/:userId/website/new', component: _components_website_website_new_website_new_component__WEBPACK_IMPORTED_MODULE_8__["WebsiteNewComponent"] },
+    { path: 'profile/:userId/website/:wid', component: _components_website_website_edit_website_edit_component__WEBPACK_IMPORTED_MODULE_7__["WebsiteEditComponent"] },
+    { path: 'profile/:userId/website/:wid/page', component: _components_page_page_list_page_list_component__WEBPACK_IMPORTED_MODULE_9__["PageListComponent"] },
+    { path: 'profile/:userId/website/:wid/page/new', component: _components_page_page_new_page_new_component__WEBPACK_IMPORTED_MODULE_11__["PageNewComponent"] },
+    { path: 'profile/:userId/website/:wid/page/:pid', component: _components_page_page_edit_page_edit_component__WEBPACK_IMPORTED_MODULE_10__["PageEditComponent"] },
+    { path: 'profile/:userId/website/:wid/page/:pid/widget', component: _components_widget_widget_list_widget_list_component__WEBPACK_IMPORTED_MODULE_14__["WidgetListComponent"] },
+    { path: 'profile/:userId/website/:wid/page/:pid/widget/new', component: _components_widget_widget_chooser_widget_chooser_component__WEBPACK_IMPORTED_MODULE_12__["WidgetChooserComponent"] },
+    { path: 'profile/:userId/website/:wid/page/:pid/widget/:wgid', component: _components_widget_widget_edit_widget_edit_component__WEBPACK_IMPORTED_MODULE_13__["WidgetEditComponent"] },
+    { path: 'profile/:userId/website/:wid/page/:pid/widget/:wgid/flickr', component: _components_widget_widget_edit_widget_image_flickr_image_search_flickr_image_search_component__WEBPACK_IMPORTED_MODULE_15__["FlickrImageSearchComponent"] }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
