@@ -8,9 +8,11 @@ module.exports = function (app) {
   app.get("/api/user/:userId", findUserById);
   app.put("/api/user/:userId", updateUser);
   app.delete("/api/user/:userId", deleteUser);
+
   app.post ('/api/login', passport.authenticate('local'), login);
   app.post('/api/logout', logout);
   app.post ('/api/register', register);
+  app.get ('/api/loggedin', loggedin);
 
   // config passport
   passport.serializeUser(serializeUser);
@@ -59,6 +61,10 @@ module.exports = function (app) {
   function login(req, res) {
     var user = req.user;
     res.json(user);
+  }
+
+  function loggedin(req, res) {
+    res.send(req.isAuthenticated() ? req.user : '0');
   }
 
   function logout(req, res) {

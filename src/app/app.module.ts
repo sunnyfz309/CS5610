@@ -43,6 +43,9 @@ import {PageService} from './service/page.service.client';
 import {WidgetService} from './service/widget.service.client';
 import {FlickrService} from './service/flickr.service.client';
 
+import {SharedService} from './service/shared.service';
+import {AuthGuard} from './service/auth-gaurd.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,7 +83,9 @@ import {FlickrService} from './service/flickr.service.client';
     WebsiteService,
     PageService,
     WidgetService,
-    FlickrService
+    FlickrService,
+    SharedService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

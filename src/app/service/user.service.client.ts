@@ -3,12 +3,17 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 // import {environment} from '../../environments/environment';
 import {environment} from '../../environments/environment.prod';
-
+import {SharedService} from './shared.service';
+import {Router} from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class UserService {
 
-  constructor(private _http: HttpClient) {}
+  constructor(
+    private _http: HttpClient,
+    private sharedService: SharedService,
+    private router: Router) {}
 
   baseUrl = environment.baseUrl;
 
@@ -54,6 +59,24 @@ export class UserService {
       password: password
     };
     return this._http.post(this.baseUrl + '/api/register', user, { withCredentials: true });
+  }
+
+  loggedIn() {
+    return this._http.post(this.baseUrl + '/api/loggedIn', '', { withCredentials: true })
+      .pipe(
+        map(
+          (res: any) => {
+            const user = res.json();
+            if (user !== 0) {
+              this.sharedService.user = user; // setting user so as to share with all components
+              return true;
+            } else {
+              this.router.navigate(['/login']);
+              return false;
+            }
+          }
+        )
+      );
   }
 
 }

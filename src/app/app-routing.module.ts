@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {Routes, RouterModule} from '@angular/router';
 import {LoginComponent} from './components/user/login/login.component';
 import {ProfileComponent} from './components/user/profile/profile.component';
 import {RegisterComponent} from './components/user/register/register.component';
@@ -13,23 +13,23 @@ import {WidgetChooserComponent} from './components/widget/widget-chooser/widget-
 import {WidgetEditComponent} from './components/widget/widget-edit/widget-edit.component';
 import {WidgetListComponent} from './components/widget/widget-list/widget-list.component';
 import {FlickrImageSearchComponent} from './components/widget/widget-edit/widget-image/flickr-image-search/flickr-image-search.component';
+import {AuthGuard} from './service/auth-gaurd.service';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'profile', component: ProfileComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'profile/:userId', component: ProfileComponent},
-  {path: 'profile/:userId/website', component: WebsiteListComponent},
-  {path: 'profile/:userId/website/new', component: WebsiteNewComponent},
-  {path: 'profile/:userId/website/:wid', component: WebsiteEditComponent},
-  {path: 'profile/:userId/website/:wid/page', component: PageListComponent},
-  {path: 'profile/:userId/website/:wid/page/new', component: PageNewComponent},
-  {path: 'profile/:userId/website/:wid/page/:pid', component: PageEditComponent},
-  {path: 'profile/:userId/website/:wid/page/:pid/widget', component: WidgetListComponent},
-  {path: 'profile/:userId/website/:wid/page/:pid/widget/new', component: WidgetChooserComponent},
-  {path: 'profile/:userId/website/:wid/page/:pid/widget/:wgid', component: WidgetEditComponent},
-  {path: 'profile/:userId/website/:wid/page/:pid/widget/:wgid/flickr', component: FlickrImageSearchComponent}
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  {path: 'profile/website', component: WebsiteListComponent, canActivate: [AuthGuard]},
+  {path: 'profile/website/new', component: WebsiteNewComponent, canActivate: [AuthGuard]},
+  {path: 'profile/website/:wid', component: WebsiteEditComponent, canActivate: [AuthGuard]},
+  {path: 'profile/website/:wid/page', component: PageListComponent, canActivate: [AuthGuard]},
+  {path: 'profile/website/:wid/page/new', component: PageNewComponent, canActivate: [AuthGuard]},
+  {path: 'profile/website/:wid/page/:pid', component: PageEditComponent, canActivate: [AuthGuard]},
+  {path: 'profile/website/:wid/page/:pid/widget', component: WidgetListComponent, canActivate: [AuthGuard]},
+  {path: 'profile/website/:wid/page/:pid/widget/new', component: WidgetChooserComponent, canActivate: [AuthGuard]},
+  {path: 'profile/website/:wid/page/:pid/widget/:wgid', component: WidgetEditComponent, canActivate: [AuthGuard]},
+  {path: 'profile/website/:wid/page/:pid/widget/:wgid/flickr', component: FlickrImageSearchComponent, canActivate: [AuthGuard]}
   ];
 
 @NgModule({
