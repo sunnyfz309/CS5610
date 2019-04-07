@@ -20,7 +20,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
-  {path: 'profile/:userId/:uid/website', component: WebsiteListComponent},
+  {path: 'profile/:userId/website', component: WebsiteListComponent},
   {path: 'profile/:userId/website/new', component: WebsiteNewComponent},
   {path: 'profile/:userId/website/:wid', component: WebsiteEditComponent},
   {path: 'profile/:userId/website/:wid/page', component: PageListComponent},
