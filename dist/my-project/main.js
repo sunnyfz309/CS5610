@@ -1199,7 +1199,8 @@ var WebsiteNewComponent = /** @class */ (function () {
         this.websiteDescription = this.webForm.value.websiteDescription;
         var website = new _models_website_model_client__WEBPACK_IMPORTED_MODULE_4__["Website"]('', this.websiteName, this.user._id, this.websiteDescription);
         this.websiteService.createWebsite(this.user._id, website).subscribe(function (data) {
-            _this.router.navigate(['/profile/website']);
+            _this.router.navigate(['/profile', _this.user._id, 'website']);
+            // this.router.navigate(['/profile/website']);
         }, function (error) { return console.log(error); });
     };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
